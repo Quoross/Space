@@ -1,10 +1,10 @@
 # Space!
 3D lander game
-
-
-
-
-
+Character controller refuses to actually be on player and i dont know why
+Made randomized terrain cause I thought it would be fun
+Yaw is useless but it shows how i was going to do movement at the start.
+My main menu was just gone thankfully it was backed up in my sourcetree.
+Figured out that for some reason my landers center wasn't at the center of it wasn't even on it quick fix thankfully.
 
 
 
