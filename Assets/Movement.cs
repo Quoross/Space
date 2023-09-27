@@ -13,7 +13,7 @@ public class Movement : MonoBehaviour
     
     void Start()
     {
-        //Fetch the Rigidbody from the Rocket with this script attached
+      
         Rigidbody = GetComponent<Rigidbody>();  
         Rigidbody.sleepThreshold = 0.0f; //Prevents it from sleeping (hopefully)
       
@@ -24,9 +24,8 @@ public class Movement : MonoBehaviour
     void Update()
     {
         roll = Input.GetAxisRaw("Horizontal") * (Time.fixedDeltaTime * RotationSpeed);
-        pitch = Input.GetAxis("Pitch") * (Time.fixedDeltaTime * RotationSpeed); 
-        //seems unnecessary and i don't think its worth convoluting the controls for it
-        // yaw = Input.GetAxisRaw("Vertical") * (Time.fixedDeltaTime * RotationSpeed);
+        pitch = Input.GetAxis("Pitch") * (Time.fixedDeltaTime * RotationSpeed);
+        yaw = Input.GetAxisRaw("Vertical") * (Time.fixedDeltaTime * RotationSpeed);
         if (Rigidbody.IsSleeping())
             Rigidbody.WakeUp();
         if (Input.GetKey(KeyCode.Space))
