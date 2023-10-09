@@ -9,6 +9,7 @@ Decided to make the fuel spawn randomly on the map hopefully that doesnt let peo
 Struggled for a while with the fuel bar cause I forgot to put in the actual game object into the script.
 Made unity crash cause I was not aware you can't use while loops had to use the initiate function instead.
 Changed all the scene changes from index + or - to actual names.
+Added a countdown but i couldn't figure out how to make it disappear if you left the ground again so decided to remove it.
 
 About:
 Just wanted to make a 3d lander game with randomly generated terrain. 
@@ -22,7 +23,7 @@ esc=pause
 Space = Thrust
 wasd = tilt
 q&e = rotate left and right
-(technically should work with controller but it has overlapping controls)
+(technically should work with controller but it has overlapping controls and nothing for thrust)
 
 Links:
 https://forum.unity.com/threads/input-getaxisraw-only-2-choices-horizontal-or-vertical.34926/    //how I learnt how to make my own axis for turning the rocket/lander
