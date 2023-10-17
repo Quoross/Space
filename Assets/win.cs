@@ -1,33 +1,34 @@
 
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
 public class win : MonoBehaviour
 {
-  public bool winner = false;
-       private void OnTriggerEnter(Collider win)
-        {
-            if (win.CompareTag("Player"))
-            {
-                Invoke("winning", 5);
-            Debug.Log("win");
+    public bool winner;
 
-            }
-            else
+    public float timeLeft = 5.0f;
+    
+
+
+
+    private void OnTriggerEnter(Collider win)
+    {
+        if (win.CompareTag("Player"))
+        {
+            timeLeft -= Time.deltaTime;
+            if (timeLeft < 0)
             {
-                winner = false;
-            }
-            if(winner== true)
-            {
-                SceneManager.LoadScene("Win");
+                Invoke(nameof(Winning), 0);
             }
         }
+        
 
-         void winning()
-         {
-             winner = true;
-         }
+        if (winner) SceneManager.LoadScene("Win");
+    }
 
-    
+    private void Winning()
+    {
+        winner = true;
+    }
 }

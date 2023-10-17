@@ -1,24 +1,22 @@
-
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    private bool gameHasEnded = false;
- public void GameOver()
-  {
-      if (gameHasEnded==false)
-      {
-           Debug.Log("Game over");
-              gameHasEnded = true;
-              Restart();
-      }
-      
-   
-  }
+    private bool gameHasEnded;
 
- void Restart()
- {
-     SceneManager.LoadScene("Level"); // could make this not be hard coded but as of now there is no reason.
- }
+    public void GameOver()
+    {
+        if (gameHasEnded == false)
+        {
+            Debug.Log("Game over");
+            gameHasEnded = true;
+            Restart();
+        }
+    }
+
+    private static void Restart()
+    {
+        SceneManager.LoadScene("Game over");
+    }
 }

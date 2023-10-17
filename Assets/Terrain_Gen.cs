@@ -1,16 +1,12 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-
 using UnityEngine;
-using Random = UnityEngine.Random;//had to specify that it was unity engine random and not just random
+using Random = UnityEngine.Random;//had to specify that it was unity engine random and not just random, I do not know why
 
-public class Terrain_Gen : MonoBehaviour
+public class TerrainGen : MonoBehaviour
 {
-   public int width = 500; 
-    public int height = 50; 
+    public int width = 256; //anything above 300 starts tanking performance for me
+    public int height = 256;
 
-    public int depth = 35; 
+    public int depth = 35;
 
     public float scale = 20f; //how severe the hills/mountains are
 
@@ -19,18 +15,17 @@ public class Terrain_Gen : MonoBehaviour
 
     private void Start()
     {
-         offX = Random.Range(0f, 9999f);
-         offY = Random.Range(0f, 9999f);
+        offX = Random.Range(0f, 9999f);
+        offY = Random.Range(0f, 9999f);
     }
 
-  private void Update()
+    private void Update()
     {
-        Terrain terrain = GetComponent<Terrain>();
+        var terrain = GetComponent<Terrain>();
         terrain.terrainData = GenerateTerrain(terrain.terrainData);
-       
     }
 
-    TerrainData GenerateTerrain (TerrainData terrainData)
+    private TerrainData GenerateTerrain(TerrainData terrainData)
     {
         terrainData.heightmapResolution = width + 1;
         terrainData.size = new Vector3(width, depth, height);
@@ -39,24 +34,20 @@ public class Terrain_Gen : MonoBehaviour
         return terrainData;
     }
 
-    float[,] GenerateHeights()
+    private float[,] GenerateHeights()
     {
-        float[,] heights = new float[width, height];
-        for(int x = 0; x < width; x++)
-        {
-            for (int y = 0; y < height; y++)
-            {
-                heights[x, y] = CalcHeight(x, y);
-            }
-        }
+        var heights = new float[width, height];
+        for (var x = 0; x < width; x++)
+        for (var y = 0; y < height; y++)
+            heights[x, y] = CalcHeight(x, y);
 
         return heights;
     }
 
-    float CalcHeight (int x, int y)
+    private float CalcHeight(int x, int y)
     {
-        float xCoord = (float)x / width * scale + offX;
-        float yCoord = (float)y / height * scale + offY;
+        var xCoord = (float)x / width * scale + offX;
+        var yCoord = (float)y / height * scale + offY;
 
         return Mathf.PerlinNoise(xCoord, yCoord); //returns a gradient noise after randomising it
     }
