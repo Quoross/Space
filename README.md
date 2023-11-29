@@ -14,9 +14,10 @@ Added a countdown but i couldn't figure out how to make it disappear if you left
 About:
 Just wanted to make a 3d lander game with randomly generated terrain. 
 As for the reason i made it  3d is mostly cause I thought 2d would be boring and i dont really like racing games which is why i made it as the lander.
-the game itself is quite simple you just need to land it and keep it on the ground for 5 seconds to win.
-it has a fuel system and fuel pickups because i couldn't think of any real power-ups.
-
+The game itself is quite simple you just need to land it and keep it on the ground for 5 seconds to win.
+It has a fuel system and fuel pickups because i couldn't think of any real power-ups.
+Added new power up that makes it so you don't lose fuel for 5 seconds and linked that to an emitter.
+Also cleaned up the unity files into folders so they're easier to find and look at.
 
 Controls;
 esc=pause

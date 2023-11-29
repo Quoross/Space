@@ -7,6 +7,7 @@ TagManager:
   - Ground
   - Power_Up
   - Feet
+  - Golden Power
   layers:
   - Default
   - TransparentFX
