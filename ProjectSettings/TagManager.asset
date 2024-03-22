@@ -8,6 +8,7 @@ TagManager:
   - Power_Up
   - Feet
   - Golden Power
+  - Drag_Power
   layers:
   - Default
   - TransparentFX

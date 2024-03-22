@@ -1,7 +1,5 @@
-using System;
-using System.Collections.Generic;
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
@@ -13,21 +11,30 @@ public class Movement : MonoBehaviour
     public GameObject emitter;
     private ParticleSystem partsys;
     public FuelBar fuelBar;
-    public bool noFuelPower=false;
+    public bool noFuelPower = false;
     public float burnRate = 15;
     public float fuel = 200;
     public float add_fuel = 30;
     private float currentFuel;
-    private bool canThrust; //  Tests if you can fly your ship.
+    private bool canThrust; // Tests if you can fly your ship.
     public Material red, gold;
+    private bool isDragPowerActive = false;
+    private float originalDrag;
+
     public void Awake()
     {
         currentFuel = fuel;
         canThrust = true;
         fuelBar.setmaxfuel(fuel);
-        partsys = emitter.GetComponent<ParticleSystem>();
+        Rigidbody = GetComponent<Rigidbody>();
+        originalDrag = Rigidbody.drag; // Store the original drag value
+        partsys = emitter != null ? emitter.GetComponent<ParticleSystem>() : null;
+        // Add a null check for emitter
+        if (emitter != null && partsys != null)
+        {
+            partsys.GetComponent<Renderer>().material = red;
+        }
     }
-
 
     private void OnTriggerEnter(Collider collission)
     {
@@ -43,16 +50,32 @@ public class Movement : MonoBehaviour
             collission.gameObject.SetActive(false);
             StartCoroutine(goldenpower());
         }
+
+        if (collission.CompareTag("Drag_Power"))
+        {
+            collission.gameObject.SetActive(false);
+            StartCoroutine(IncreaseDragForDuration(5f)); // Increase drag for 5 seconds
+        }
+    }
+
+    private IEnumerator IncreaseDragForDuration(float duration)
+    {
+        float originalDrag = Rigidbody.drag; // Store the original drag value
+        Rigidbody.drag *= 2; // Double the drag
+        isDragPowerActive = true;
+        yield return new WaitForSeconds(duration);
+        Rigidbody.drag = originalDrag; // Restore original drag
+        isDragPowerActive = false;
     }
 
     private IEnumerator goldenpower()
     {
         partsys.GetComponent<Renderer>().material = gold;
         yield return new WaitForSeconds(5);
-         noFuelPower = false;
-         partsys.GetComponent<Renderer>().material = red;
+        noFuelPower = false;
+        partsys.GetComponent<Renderer>().material = red;
     }
-   
+
     private void AddFuel()
     {
         currentFuel += add_fuel;
@@ -65,17 +88,16 @@ public class Movement : MonoBehaviour
         Rigidbody.sleepThreshold = 0.0f; //Prevents it from sleeping (hopefully)
     }
 
-
     private void Update()
     {
         var partsysEmission = partsys.emission;
-        
+
         if (Input.GetKey(KeyCode.Space))
         {
             if (!noFuelPower)
             {
-                 currentFuel = currentFuel - burnRate * Time.deltaTime;
-                 Debug.Log("Fuel is: " + currentFuel);
+                currentFuel = currentFuel - burnRate * Time.deltaTime;
+                Debug.Log("Fuel is: " + currentFuel);
             }
         }
 
@@ -91,7 +113,7 @@ public class Movement : MonoBehaviour
                 //Apply a force to this Rigidbody in direction of Rockets up axis
                 Rigidbody.AddRelativeForce(Vector3.up * Thrust);
                 fuelBar.SetFuel(currentFuel);
-                
+
                 partsysEmission.enabled = true;
             }
             else
